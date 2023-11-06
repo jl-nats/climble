@@ -21,7 +21,8 @@ export default function ShareButton(props: {
           )
           .join("") +
         (props.won ? props.guessCount : "X") +
-        "/4"
+        "/4\n" +
+        "https://climble.vercel.app"
     );
   }
   return (

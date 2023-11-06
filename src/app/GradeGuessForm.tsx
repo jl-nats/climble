@@ -1,5 +1,6 @@
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import SubmitButton from "./SubmitButton";
 
 export default function GradeGuessForm(props: { grade: number }) {
   async function submit(formData: FormData) {
@@ -63,16 +64,7 @@ export default function GradeGuessForm(props: { grade: number }) {
             </option>
           ))}
         </select>
-        <button
-          className={
-            "bg-slate-500 p-1 ml-8 rounded " +
-            (finished === "true" ? "" : "hover:bg-slate-600")
-          }
-          type="submit"
-          disabled={finished === "true"}
-        >
-          Guess
-        </button>
+        <SubmitButton finished={finished === "true"} />
       </form>
     </div>
   );
