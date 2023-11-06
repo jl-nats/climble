@@ -8,6 +8,9 @@ export default function GradeGuessForm(props: { grade: number }) {
 
     const gradeGuess = formData.get("gradeGuess");
     const guessData = cookies().get("guesses")?.value;
+    const now = new Date();
+    const midnight = now.setUTCHours(23, 59, 59, 0);
+    const options = { expires: midnight };
 
     if (cookies().get("guessCount")?.value === undefined) {
       cookies().set("guessCount", "0");
@@ -18,28 +21,30 @@ export default function GradeGuessForm(props: { grade: number }) {
     if (gradeGuess) {
       if (guessData) {
         const newGuessData = guessData + "|" + gradeGuess;
-        cookies().set("guesses", newGuessData);
+        cookies().set("guesses", newGuessData, options);
         cookies().set(
           "guessCount",
-          (parseInt(guessCount ?? "0") + 1).toString()
+          (parseInt(guessCount ?? "0") + 1).toString(),
+          options
         );
       } else {
         const newGuessData = gradeGuess.toString();
-        cookies().set("guesses", newGuessData);
+        cookies().set("guesses", newGuessData, options);
         cookies().set(
           "guessCount",
-          (parseInt(guessCount ?? "0") + 1).toString()
+          (parseInt(guessCount ?? "0") + 1).toString(),
+          options
         );
       }
       const boulderGrade = props.grade;
 
       if (parseInt(cookies().get("guessCount")?.value ?? "0") >= 4) {
-        cookies().set("finished", "true");
+        cookies().set("finished", "true", options);
       }
 
       if (boulderGrade === parseInt(gradeGuess.toString()[1])) {
-        cookies().set("won", "true");
-        cookies().set("finished", "true");
+        cookies().set("won", "true", options);
+        cookies().set("finished", "true", options);
       }
     }
 
